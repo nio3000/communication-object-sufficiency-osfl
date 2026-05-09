@@ -1,0 +1,72 @@
+exp_name: cifar100_labelskew_parameter_baseosfl
+output_dir: outputs
+
+hardware:
+  device: auto
+  gpu_id: 0
+
+dataset:
+  name: cifar100
+  data_root: ./data
+  num_classes: 100
+  in_channels: 3
+
+model:
+  name: resnet18
+  pretrained: true
+  num_classes: 100
+
+federated:
+  num_clients: 20
+  participation_rate: 1.0
+  one_shot: true
+  non_iid:
+    type: label
+    alpha: 0.1
+
+train:
+  local_epochs: 20
+  batch_size: 64
+  lr: 0.001
+  weight_decay: 0.0001
+  optimizer: adamw
+  momentum: 0.9
+  label_smoothing: 0.0
+  data_augmentation:
+    enabled: true
+    random_horizontal_flip: 0.5
+    random_rotation: 10
+
+method:
+  name: param_baseosfl
+  family: parameter
+
+  meta_init:
+    enabled: true
+    meta_steps: 1000
+    meta_lr: 0.001
+    inner_steps: 1
+    inner_lr: 0.001
+
+  local_train:
+    proximal_enabled: true
+    prox_mu: 0.003
+    train_head_only: false
+
+  calibration:
+    enabled: true
+    calib_size: 500
+    calib_epochs: 20
+    lr: 0.002
+
+  fedavg:
+    agg_lr: 1.0
+
+representation:
+  train_encoder: true
+  freeze_backbone_bn: true
+
+monitoring:
+  verbose_partition: true
+
+seeds: [42, 52, 62]

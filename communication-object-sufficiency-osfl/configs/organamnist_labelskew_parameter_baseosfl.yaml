@@ -1,0 +1,64 @@
+exp_name: organamnist_labelskew_parameter_baseosfl
+seed: 42
+seeds: [42, 52, 62]
+output_dir: outputs/organamnist_labelskew_parameter_baseosfl
+
+hardware:
+  device: auto
+  gpu_id: 0
+
+dataset:
+  name: organamnist
+  data_root: ./data
+  num_classes: 11
+
+model:
+  name: resnet18
+
+federated:
+  num_clients: 20
+  non_iid:
+    type: label
+    alpha: 0.1
+
+train:
+  batch_size: 128
+  local_epochs: 20
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: adamw
+  label_smoothing: 0.0
+  data_augmentation:
+    enabled: true
+    random_horizontal_flip: 0.5
+    random_rotation: 10
+    color_jitter: 0.0
+    random_affine: 0.0
+
+monitoring:
+  verbose_partition: false
+
+method:
+  name: parameter_baseosfl
+  family: parameter
+
+  meta_init:
+    enabled: true
+    meta_steps: 1000
+    meta_lr: 0.001
+    inner_steps: 5
+    inner_lr: 0.001
+
+  local_train:
+    proximal_enabled: true
+    prox_mu: 0.003
+    train_head_only: false
+
+  calibration:
+    enabled: true
+    calib_size: 500
+    calib_epochs: 20
+    lr: 0.002
+
+  fedavg:
+    agg_lr: 1.0

@@ -1,0 +1,13 @@
+--index-url https://pypi.org/simple
+--extra-index-url https://download.pytorch.org/whl/cu118
+
+torch
+torchvision
+torchaudio
+numpy
+pandas
+scikit-learn
+pyyaml
+tqdm
+medmnist
+Pillow

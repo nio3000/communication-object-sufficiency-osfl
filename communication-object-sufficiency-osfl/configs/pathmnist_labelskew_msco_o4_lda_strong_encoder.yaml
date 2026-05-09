@@ -1,0 +1,52 @@
+exp_name: pathmnist_labelskew_msco_o4_lda_strong_encoder
+seed: 42
+seeds:
+- 42
+- 52
+- 62
+hardware:
+  device: auto
+  gpu_id: 0
+train:
+  batch_size: 128
+  local_epochs: 20
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: adamw
+  label_smoothing: 0.0
+  data_augmentation:
+    enabled: true
+    random_horizontal_flip: 0.5
+    random_rotation: 10
+    color_jitter: 0.0
+    random_affine: 0.0
+monitoring:
+  verbose_partition: false
+output_dir: outputs/pathmnist_labelskew_msco_o4_lda_strong_encoder
+dataset:
+  name: pathmnist
+  data_root: ./data
+  num_classes: 9
+model:
+  name: resnet18
+federated:
+  num_clients: 20
+  non_iid:
+    type: label
+    alpha: 0.1
+method:
+  name: pathmnist_labelskew_msco_o4_lda_strong_encoder
+  family: msco
+  meta_init:
+    enabled: true
+    meta_steps: 1000
+    meta_lr: 0.001
+    inner_steps: 5
+    inner_lr: 0.001
+  msco:
+    object_level: O4
+    head_type: lda
+    shrinkage: 0.001
+    diag_floor: 0.0001
+    eps: 1.0e-06
+    max_stats_samples: null

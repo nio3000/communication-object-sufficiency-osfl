@@ -1,0 +1,55 @@
+exp_name: pathmnist_labelskew_msco_o4_lda_pt05
+seed: 42
+seeds: [42, 52, 62]
+output_dir: outputs/pathmnist_labelskew_msco_o4_lda_pt05
+
+hardware:
+  device: auto
+  gpu_id: 0
+
+dataset:
+  name: pathmnist
+  data_root: ./data
+  num_classes: 9
+
+model:
+  name: resnet18
+
+federated:
+  num_clients: 20
+  non_iid:
+    type: label
+    alpha: 0.1
+
+train:
+  batch_size: 128
+  local_epochs: 20
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: adamw
+  label_smoothing: 0.0
+  data_augmentation:
+    enabled: false
+
+monitoring:
+  verbose_partition: false
+
+method:
+  name: msco_o4_lda_pt05
+  family: msco
+
+  meta_init:
+    enabled: true
+    meta_steps: 1000
+    meta_lr: 0.001
+    inner_steps: 5
+    inner_lr: 0.001
+
+  msco:
+    object_level: O4
+    head_type: lda
+    shrinkage: 0.15
+    diag_floor: 0.0001
+    eps: 1.0e-06
+    max_stats_samples: null
+    prior_temperature: 0.5
