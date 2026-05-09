@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/1233577082.svg)](https://doi.org/10.5281/zenodo.20093074)
 # SOS-HAMOC: Strict One-Shot Communication-Object Reconstruction
 
 **Code for:** *Non-Monotonic Communication-Object Sufficiency in Strict One-Shot Federated Classification*
