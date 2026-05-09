@@ -1,4 +1,5 @@
----
+[![DOI](https://zenodo.org/badge/1233577082.svg)](https://doi.org/10.5281/zenodo.20093074)
+
 # 中文说明
 
 # SOS-HAMOC：严格单轮联邦分类中的通信对象重构代码
